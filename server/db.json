@@ -1,0 +1,272 @@
+{
+  "courses": [
+    {
+      "id": "edb419a9-3f31-4453-9a75-71d2ebae0f00",
+      "code": "1234",
+      "name": "thee",
+      "lecturer": "dsfdsf",
+      "createdAt": "2026-03-23T09:49:19.361Z"
+    },
+    {
+      "id": "a1e19250-1bb5-4206-8861-732f56d1e6b3",
+      "code": "80085",
+      "name": "Lessons in Game ",
+      "lecturer": "Pius Linus",
+      "lecturerId": "c256766b-57af-4fc8-b389-fe8dce6fdff2",
+      "createdAt": "2026-03-25T07:18:29.380Z"
+    }
+  ],
+  "students": [
+    {
+      "id": "51f66f6b-77d2-4cf6-8198-c6a2ea3434d2",
+      "name": "Given",
+      "studentId": "1234567",
+      "email": "balowagiven8@gmail.com",
+      "courseId": "edb419a9-3f31-4453-9a75-71d2ebae0f00",
+      "createdAt": "2026-03-23T11:11:05.377Z"
+    }
+  ],
+  "sessions": [
+    {
+      "id": "dcbdc74d-4a65-41f9-a0f0-ec7b9d83197a",
+      "courseId": "edb419a9-3f31-4453-9a75-71d2ebae0f00",
+      "courseName": "thee",
+      "courseCode": "1234",
+      "sessionCode": "8B7CD67D",
+      "startedAt": "2026-03-23T10:11:15.136Z",
+      "expiresAt": "2026-03-23T10:21:15.136Z",
+      "lateAfter": "2026-03-23T10:16:15.136Z",
+      "windowMinutes": 10,
+      "lateThresholdMinutes": 5,
+      "active": true,
+      "qrDataUrl": "data:image/png;base64,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",
+      "scanUrl": "http://localhost:3000/scan/dcbdc74d-4a65-41f9-a0f0-ec7b9d83197a/8B7CD67D"
+    },
+    {
+      "id": "aa914c0e-b287-4ec4-b932-c4013db6b1aa",
+      "courseId": "edb419a9-3f31-4453-9a75-71d2ebae0f00",
+      "courseName": "thee",
+      "courseCode": "1234",
+      "lecturerId": "ea1d1445-1564-4bd2-ae47-99cf81e4239f",
+      "lecturerName": "Admin",
+      "sessionCode": "A7C4759B",
+      "startedAt": "2026-03-23T10:47:14.858Z",
+      "expiresAt": "2026-03-23T10:57:14.858Z",
+      "lateAfter": "2026-03-23T10:52:14.858Z",
+      "windowMinutes": 10,
+      "lateThresholdMinutes": 5,
+      "active": true,
+      "qrDataUrl": "data:image/png;base64,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",
+      "scanUrl": "http://localhost:3000/scan/aa914c0e-b287-4ec4-b932-c4013db6b1aa/A7C4759B"
+    },
+    {
+      "id": "76b756d0-500b-4459-b083-6b9fadd219a0",
+      "courseId": "edb419a9-3f31-4453-9a75-71d2ebae0f00",
+      "courseName": "thee",
+      "courseCode": "1234",
+      "lecturerId": "ea1d1445-1564-4bd2-ae47-99cf81e4239f",
+      "lecturerName": "Admin",
+      "sessionCode": "7EC0CE34",
+      "startedAt": "2026-03-23T11:07:10.532Z",
+      "expiresAt": "2026-03-23T11:17:10.532Z",
+      "lateAfter": "2026-03-23T11:12:10.532Z",
+      "windowMinutes": 10,
+      "lateThresholdMinutes": 5,
+      "active": true,
+      "qrDataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAAAklEQVR4AewaftIAAAcySURBVO3BQY4cOxbAQFKo+1+Z46VWAhJZ3f7WvAj7gzEusRjjIosxLrIY4yKLMS6yGOMiizEushjjIosxLrIY4yKLMS6yGOMiizEushjjIosxLrIY4yIfXlL5TRUnKicVJyq7ihOVXcVO5aTiCZWfVLFT+U0VbyzGuMhijIssxrjIhy+r+CaVE5WfpLKr+Jsqdiq7ip3KrmKn8kTFN6l802KMiyzGuMhijIt8+GEqT1T8JpWTip3KruKkYqeyUzmp2Kk8UbFT2VW8ofJExU9ajHGRxRgXWYxxkQ//Z1ROKr5J5aTijYo3VHYV/7LFGBdZjHGRxRgX+fCPqzhROanYqZxU7FR2FScVT6jsKk5UdhX/TxZjXGQxxkUWY1zkww+r+E0qu4oTlV3FT1I5qThROanYqZxUvFHxX7IY4yKLMS6yGOMiH75M5Tep7Cp2KruKJ1R2FW9U7FSeqNipPFGxU9lVnKj8ly3GuMhijIssxriI/cE/TOWkYqeyq9ipPFHxhsqu4gmVk4r/J4sxLrIY4yKLMS7y4SWVXcU3qewqTipOKp6o2Kk8ofKEyhsVT6g8UXGi8kTFNy3GuMhijIssxrjIhx+m8kbFEyq7ihOVXcVOZVdxorKrOFF5ouIJlV3FScVOZafyRMVO5SctxrjIYoyLLMa4iP3BCyonFTuVb6rYqewq3lDZVXyTyq7iCZWbVLyxGOMiizEushjjIvYH/zCVJyp2KicVO5WTip3KruJE5SdVfJPKScWJyq7ijcUYF1mMcZHFGBf58JLKExVPqOwqdhU7lV3FExUnFTuVncqJyhsVT6i8ofKGyq7iJy3GuMhijIssxrjIhy+reEJlV7Gr2KnsKnYVT1TsVE4q3qjYqewq3lB5QuWJihOVXcVvWoxxkcUYF1mMcZEPX6ayq3hC5aTiRGVXsVM5qThReaLiCZU3KnYqb1ScqDyh8pMWY1xkMcZFFmNc5MMvU9lV7FR2FScqu4qdyq7iROWbVHYVu4q/qWKnslPZVTyh8psWY1xkMcZFFmNc5MMvq9ip7Cp2Km9UnKjsKp5Q2VWcqOwqdipvVJyonFQ8UXGiclLxTYsxLrIY4yKLMS5if/BFKicVJyq7ihOVXcVO5Y2KJ1ROKnYqJxVPqOwqTlS+qWKnclLxTYsxLrIY4yKLMS7y4YdV7FR2FScqu4onKp5QOVHZVewqdipPVOxUdhU7lV3FicpJxYnKExUnKruKNxZjXGQxxkUWY1zkww9T2VXsVE4qvkllV7Gr2KnsKp6o2KmcqJyoPKGyqzhR2VU8obKr+E2LMS6yGOMiizEu8uEvqzhROan4JpUTlV3FGxU7lScqTiqeqHij4omKb1qMcZHFGBdZjHGRDy+pnFS8UbFTOVHZVewqnqg4UdlV7FR2FScVO5VdxU7liYoTlV3FScWJyq5ip7KreGMxxkUWY1xkMcZFPvwwlV3FTuWbKp5QeaPiCZWTil3Fb6p4QuWk4jctxrjIYoyLLMa4yIeXKk5Udiq7ip3KruIJlV3FExU7lV3FExUnKk+onFScqJxU7FROKp5Q+UmLMS6yGOMiizEuYn/wRSonFTuVJyr+S1SeqHhCZVexUzmpeEJlV7FTeaLiNy3GuMhijIssxrjIh5dU3qjYqewqdionFScqJxU7lV3FExVPqOwqnqjYqewqTip2KruKJ1R2FT9pMcZFFmNcZDHGRT58WcVO5UTlRGVXcaJyUvFExUnFGyonKruKJypOVHYVT6icVOxUTireWIxxkcUYF1mMcZEPP6xip7Kr2KnsKk5UTip2KruKE5WTip9UcVJxorKrOFE5UdlVPFGxU/mmxRgXWYxxkcUYF/nwyyqeUDmpeEPlpOJEZVfxRMVOZaeyq9ip7Cp2FT9J5aRip/KTFmNcZDHGRRZjXMT+4B+msqv4JpVdxYnKScWJyq7iROWk4kRlV/GEyq7iCZVdxRuLMS6yGOMiizEu8uElld9UsavYqZxUnKicqJxUPKHyhMquYqeyU9lVPKGyqzhR+ZsWY1xkMcZFFmNcxP7gBZVdxTep7Cr+S1SeqPibVE4qnlDZVexUnqh4YzHGRRZjXGQxxkU+/DCVJyreUPlJFScVJyq7ip3KrmKnsqs4UXlC5TdVfNNijIssxrjIYoyLfLhMxU5lV7FT+SaVk4onVHYVO5VdxRsVb6jsKk5UdhVvLMa4yGKMiyzGuMiHy6jsKnYqu4onVE4qTlR2FT+pYqeyq9ip/MsWY1xkMcZFFmNc5MMPq/hNFScVO5VdxU5lV/GEyonKN6nsKt6o2KmcVPxNizEushjjIosxLvLhy1R+k8pJxU7lDZU3Kk5U3qjYqewqdipPVOxUdionFT9pMcZFFmNcZDHGRewPxrjEYoyLLMa4yGKMiyzGuMhijIssxrjIYoyLLMa4yGKMiyzGuMhijIssxrjIYoyLLMa4yGKMi/wPx9upZhSHC7sAAAAASUVORK5CYII=",
+      "scanUrl": "http://192.168.0.131:3000/scan/76b756d0-500b-4459-b083-6b9fadd219a0/7EC0CE34"
+    },
+    {
+      "id": "35faf8dd-d829-49d9-b833-9d6a83f3a5b4",
+      "courseId": "edb419a9-3f31-4453-9a75-71d2ebae0f00",
+      "courseName": "thee",
+      "courseCode": "1234",
+      "lecturerId": "ea1d1445-1564-4bd2-ae47-99cf81e4239f",
+      "lecturerName": "Admin",
+      "sessionCode": "47290F01",
+      "startedAt": "2026-03-23T11:08:51.480Z",
+      "expiresAt": "2026-03-23T11:18:51.480Z",
+      "lateAfter": "2026-03-23T11:13:51.480Z",
+      "windowMinutes": 10,
+      "lateThresholdMinutes": 5,
+      "active": true,
+      "qrDataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAAAklEQVR4AewaftIAAAdUSURBVO3BQY4cybIgQVVH3f/KOtx9WwUQyCw2n4+J2B+sdYnDWhc5rHWRw1oXOax1kcNaFzmsdZHDWhc5rHWRw1oXOax1kcNaFzmsdZHDWhc5rHWRw1oX+eFDKn9TxaQyVbyhMlV8QuWNikllqphUpopJ5UnFGyp/U8UnDmtd5LDWRQ5rXeSHL6v4JpUnFZPKVDGpTBWfUJkqJpWpYlKZKp5UTCpPKiaVJxVPKr5J5ZsOa13ksNZFDmtd5IdfpvJGxScqJpU3VJ5UPFF5ovJE5Y2K/5LKGxW/6bDWRQ5rXeSw1kV++B+n8qRiUvmEylQxqUwVk8obFU9UpopJZaqYVG5yWOsih7UucljrIj/8f07lEypTxScqJpWpYqpY/+ew1kUOa13ksNZFfvhlFf8llTcqJpWp4g2VN1SmiknljYpJZar4RMW/5LDWRQ5rXeSw1kV++DKV/1LFpDJVTCqfUJkqnlRMKlPFpDJVTCpTxaQyVUwqU8UTlX/ZYa2LHNa6yGGti9gf/A9TeaNiUvlExaTyTRWTylQxqUwVk8qTiv9lh7UucljrIoe1LvLDh1SmijdUpopJ5W+qeKLypGJSmSr+ZSrfVPFEZar4xGGtixzWushhrYvYH3yRyicqnqh8ouKJypOKSeVJxaTyRsUbKlPFE5WpYlKZKiaVT1R802GtixzWushhrYv88GUVn1B5o+ITKlPFb6qYVKaKSWWqmFSeqEwVb1RMKm9U/E2HtS5yWOsih7UuYn/wAZVPVEwqU8Wk8qTiDZWpYlKZKp6oPKn4hMo3VUwqTyomlaliUnlS8U2HtS5yWOsih7UuYn/wF6lMFZPKJyomlaniEypTxROVNyq+SeVvqnii8qTiE4e1LnJY6yKHtS7yw4dUnlR8omJSmSomlaliUpkqJpWpYqqYVP5lFU9UvkllqpgqJpVvOqx1kcNaFzmsdRH7gw+oPKn4hMpU8YbKVPGGypOKJyrfVPE3qUwVk8onKr7psNZFDmtd5LDWRX74sopJ5UnFpDJVTCpTxSdUpoonFZPKVDFVfJPKk4onKlPFpPJGxROVqeI3Hda6yGGtixzWusgP/zGVJyqfqHhDZaqYVL5J5ZtUpoqp4hMq/7LDWhc5rHWRw1oXsT/4gMqTijdUpoo3VKaKN1SeVDxReaNiUpkqPqEyVTxReVLxhsqTim86rHWRw1oXOax1EfuDX6QyVbyhMlU8UXlSMalMFZPKk4o3VKaKJypTxaTyTRWTylTxLzusdZHDWhc5rHUR+4MvUvmmiicqU8UbKk8qJpXfVPGGylQxqUwVb6i8UTGpPKn4psNaFzmsdZHDWhexP/iAylQxqUwVb6j8Syr+JpWp4onKGxXfpDJV/E2HtS5yWOsih7Uu8sOHKr5JZaqYVKaK36TyRGWqeKIyVTypeKIyVUwqU8Wk8qTijYonKk8qPnFY6yKHtS5yWOsiP/zHVJ6oTBWfUHlSMVVMKk9Upoqp4onKGxW/SeWbKn7TYa2LHNa6yGGti/zwl6lMFZPKVPGGylTxCZWp4onKpDJVfKLimyreUJkqJpUnKk8qPnFY6yKHtS5yWOsiP3xIZap4UjGpTBWTylQxqXyiYlJ5ojJVTBWTyhsVT1SmikllqphUpoonKk9UpopJ5UnFNx3WushhrYsc1rrID1+m8k0Vb1Q8qZhU3qiYVJ5UTCpvVDxReaNiUpkqnlR8ouI3Hda6yGGtixzWusgPH6p4ovKk4onKVDFVvKHypOI3VUwqn6h4Q+WJylTxhsp/6bDWRQ5rXeSw1kXsD/4hKlPFpPKJit+k8qTiDZU3Kp6oPKl4ovJGxaQyVXzTYa2LHNa6yGGti9gffEDlScUTlaliUnmjYlJ5o+KJylTxROVJxROVqWJS+ZdUPFF5UvGJw1oXOax1kcNaF7E/+B+mMlU8UXlSMalMFU9UPlHxhspUMalMFZPKVPGGylTxhspU8YnDWhc5rHWRw1oX+eFDKn9TxROVb6p4ojJVTCpvqEwVk8obFZ9QmSqeqLxR8U2HtS5yWOsih7Uu8sOXVXyTypOKJypTxaTyROVJxZOKN1QmlTdUpopPVHyi4m86rHWRw1oXOax1kR9+mcobFW+ovKEyVXxCZap4Q2WqeKIyVUwqk8pU8UTlm1SeVHzTYa2LHNa6yGGti/zwP65iUnlDZap4UvFE5Y2KSWWqmComlTdUpoo3VKaKSeVJxaQyVXzisNZFDmtd5LDWRX64XMWk8kTlicpUMVVMKt+kMlW8oTKpTBVvqDypmFSmim86rHWRw1oXOax1kR9+WcW/rGJSmSomlUnlScWkMql8k8pUMVVMKk9UPqHyNx3WushhrYsc1rqI/cEHVP6mikllqphUnlT8JpWp4g2VNyomlaliUnmjYlKZKp6oPKn4xGGtixzWushhrYvYH6x1icNaFzmsdZHDWhc5rHWRw1oXOax1kcNaFzmsdZHDWhc5rHWRw1oXOax1kcNaFzmsdZHDWhf5f/7fwXX2mDK1AAAAAElFTkSuQmCC",
+      "scanUrl": "http://192.168.0.131:3000/scan/35faf8dd-d829-49d9-b833-9d6a83f3a5b4/47290F01"
+    },
+    {
+      "id": "440d03d0-fe4d-4651-a930-9bf12e8fdb36",
+      "courseId": "edb419a9-3f31-4453-9a75-71d2ebae0f00",
+      "courseName": "thee",
+      "courseCode": "1234",
+      "lecturerId": "ea1d1445-1564-4bd2-ae47-99cf81e4239f",
+      "lecturerName": "Admin",
+      "sessionCode": "DB94B103",
+      "startedAt": "2026-03-23T11:10:16.851Z",
+      "expiresAt": "2026-03-23T11:20:16.851Z",
+      "lateAfter": "2026-03-23T11:15:16.851Z",
+      "windowMinutes": 10,
+      "lateThresholdMinutes": 5,
+      "active": true,
+      "qrDataUrl": "data:image/png;base64,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",
+      "scanUrl": "http://192.168.0.131:3000/scan/440d03d0-fe4d-4651-a930-9bf12e8fdb36/DB94B103"
+    },
+    {
+      "id": "f7d9f5fe-bc62-4923-b91c-d69ba022ee46",
+      "courseId": "edb419a9-3f31-4453-9a75-71d2ebae0f00",
+      "courseName": "thee",
+      "courseCode": "1234",
+      "lecturerId": "ea1d1445-1564-4bd2-ae47-99cf81e4239f",
+      "lecturerName": "Admin",
+      "sessionCode": "B361136C",
+      "startedAt": "2026-03-23T11:11:13.714Z",
+      "expiresAt": "2026-03-23T11:21:13.714Z",
+      "lateAfter": "2026-03-23T11:16:13.714Z",
+      "windowMinutes": 10,
+      "lateThresholdMinutes": 5,
+      "active": true,
+      "qrDataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAAAklEQVR4AewaftIAAAeJSURBVO3BQY4cy5LAQDLQ978yR0ufTQKJqpb+C7iZ/cFalzisdZHDWhc5rHWRw1oXOax1kcNaFzmsdZHDWhc5rHWRw1oXOax1kcNaFzmsdZHDWhc5rHWRHz6k8jdVTCpPKp6oPKl4ovJGxaQyVbyhMlU8UZkqnqj8TRWfOKx1kcNaFzmsdZEfvqzim1TeqJhUpoqp4onKVDFVTCpTxaTyCZV/qeKbVL7psNZFDmtd5LDWRX74ZSpvVLxR8aRiUpkqfpPKVDGpPFGZKiaVSWWqmCq+SeWNit90WOsih7UucljrIj/8x6lMFW+oTBVTxROVqWJSmVSeqDxRmSqeqEwVNzusdZHDWhc5rHWRH/7jKiaVJxWTyqQyVTypmFSeVLyh8kTlEypTxX/ZYa2LHNa6yGGti/zwyyr+pYpJZaqYVJ6oTBVTxROVJxVTxaQyVUwqT1S+qeJ/yWGtixzWushhrYv88GUqf5PKVDGpTBWTylQxqUwVk8pUMalMFZPKE5WpYlKZKiaVqWJSeUPlf9lhrYsc1rrIYa2L2B/8h6lMFU9Upoo3VD5R8UTljYpJ5UnFzQ5rXeSw1kUOa13khw+pTBWTypOKSeWNik+oPKl4o+INlaniicobFZPKk4pJZap4ojJVTCpPKj5xWOsih7UucljrIvYHH1D5RMWkMlVMKlPFpDJVPFH5TRW/SWWqmFSeVEwqb1Q8UXlS8U2HtS5yWOsih7Uu8sOHKp6oPFGZKiaV31TxhspUMal8QmWqeFIxqUwVb1Q8UXmj4m86rHWRw1oXOax1kR++TGWqeKLypGJSmVSmikllqphUpopPVEwqTyq+qWJSmSreUHmi8qTibzqsdZHDWhc5rHWRHz6kMlVMKlPFVPFEZar4hMpUMak8qXij4m9SmSqeqLxR8UTlicqTik8c1rrIYa2LHNa6yA8fqphUnqi8UfFNFU8qJpUnKlPFGypTxROV31TxhsonKr7psNZFDmtd5LDWRewPPqDypOKJyjdVTCpPKr5J5UnFpPKJikllqphUpoonKm9UTCpTxaQyVXzisNZFDmtd5LDWRX74UMWkMqk8qZhUpoonKv9lFZPKVPFGxaTyROWNijcq/qbDWhc5rHWRw1oX+eFDKlPFE5U3VP6XqHxC5ZtUpoqp4g2VqeKJyhsVv+mw1kUOa13ksNZFfvjLKt6omFSmikllqphU3lCZKiaVJxWTyt+kMlU8qfhExROV33RY6yKHtS5yWOsi9gcfUHlSMal8U8Wk8kbFGyrfVPGGyjdVTCpTxSdU3qj4xGGtixzWushhrYv88GUVk8obFX+TylQxqUwVT1Q+ofKJik9UTCpTxROVqWJSmSq+6bDWRQ5rXeSw1kV++FDFk4onKk9UPlExqUwVk8obKlPFpDJVTCpTxROVJypTxaTypOINlScqU8WkMlV84rDWRQ5rXeSw1kV++GUqn6iYVL5JZap4ojJVPKl4Q+VJxROVT6hMFZPKGxV/02GtixzWushhrYv88CGVJxWTyhsqb1R8k8obKlPFGxWTyhOVqWJSeVLxROVJxScqvumw1kUOa13ksNZF7A8+oPJGxaTypGJSmSqeqHyi4hMqU8Wk8kbFE5U3KiaVqeITKlPFpDJVfOKw1kUOa13ksNZF7A++SGWqmFSmiknlExWTylQxqUwV36TymyqeqEwVk8pU8URlqphU3qj4psNaFzmsdZHDWhf54ZepTBVvVEwqU8WTik+oTBWTylTxpGJSeVLxmyomlaniicpUMak8UZkqPnFY6yKHtS5yWOsiP/xjKk9UpoonKlPFk4pJ5YnKGxWTypOKSeVJxaQyVUwqTyreqPhExTcd1rrIYa2LHNa6yA8fUpkqnqi8UTGpfELljYonKpPKk4rfVPFGxaTyhsobFZPKVPGJw1oXOax1kcNaF7E/+IdUpopJZar4hMpU8UTlScWkMlU8UZkqvknlb6r4lw5rXeSw1kUOa13kh3+s4knFE5UnFW+oPKmYVJ6oPKl4ojJVvFHxRGWqeEPlicpU8ZsOa13ksNZFDmtd5IcPqfxNFU8qJpWp4knFpPKJiicqTyr+JZWp4onKVPFEZar4xGGtixzWushhrYv88GUV36TyiYonKk8q3qj4RMUTlScVk8onKt6omFSmiqnimw5rXeSw1kUOa13kh1+m8kbFGxV/k8pU8URlqpgqnqg8qZhUpoonKpPKJ1SmiknlScUnDmtd5LDWRQ5rXeSH/ziVqWJSmSqmim9SeUNlqpgqJpVJZaqYVKaKqeITKlPFpDJVTCrfdFjrIoe1LnJY6yI/rP9HZaqYKiaVJxWTyhsqTyr+JpWp4g2VqeKbDmtd5LDWRQ5rXeSHX1bxmyqeVDxRmSomlaniExWTyqQyVUwqk8pUMVVMKp+omFTeqPhNh7UucljrIoe1LmJ/8AGVv6liUnlSMam8UTGpTBVvqHyiYlJ5UvFNKlPFpDJVTCpPKj5xWOsih7UucljrIvYHa13isNZFDmtd5LDWRQ5rXeSw1kUOa13ksNZFDmtd5LDWRQ5rXeSw1kUOa13ksNZFDmtd5LDWRf4PIR3sfQPOwigAAAAASUVORK5CYII=",
+      "scanUrl": "http://192.168.0.131:3000/scan/f7d9f5fe-bc62-4923-b91c-d69ba022ee46/B361136C"
+    },
+    {
+      "id": "eebb25d4-5c4b-49ce-a760-6dbfba11832b",
+      "courseId": "edb419a9-3f31-4453-9a75-71d2ebae0f00",
+      "courseName": "thee",
+      "courseCode": "1234",
+      "lecturerId": "ea1d1445-1564-4bd2-ae47-99cf81e4239f",
+      "lecturerName": "Admin",
+      "sessionCode": "19177EB2",
+      "startedAt": "2026-03-23T17:59:54.142Z",
+      "expiresAt": "2026-03-23T18:09:54.142Z",
+      "lateAfter": "2026-03-23T18:04:54.142Z",
+      "windowMinutes": 10,
+      "lateThresholdMinutes": 5,
+      "active": true,
+      "qrDataUrl": "data:image/png;base64,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",
+      "scanUrl": "http://192.168.0.131:3000/scan/eebb25d4-5c4b-49ce-a760-6dbfba11832b/19177EB2"
+    },
+    {
+      "id": "1a2aa3ba-597b-4c55-a32d-c2bc37a3eec1",
+      "courseId": "a1e19250-1bb5-4206-8861-732f56d1e6b3",
+      "courseName": "Lessons in Game ",
+      "courseCode": "80085",
+      "lecturerId": "c256766b-57af-4fc8-b389-fe8dce6fdff2",
+      "lecturerName": "Pius Linus",
+      "sessionCode": "D5BF1731",
+      "startedAt": "2026-03-25T07:18:57.924Z",
+      "expiresAt": "2026-03-25T07:28:57.924Z",
+      "lateAfter": "2026-03-25T07:23:57.924Z",
+      "windowMinutes": 10,
+      "lateThresholdMinutes": 5,
+      "active": true,
+      "qrDataUrl": "data:image/png;base64,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",
+      "scanUrl": "http://192.168.0.131:3000/scan/1a2aa3ba-597b-4c55-a32d-c2bc37a3eec1/D5BF1731"
+    },
+    {
+      "id": "da875c58-1d35-428b-8cf7-6ff367aeab6e",
+      "courseId": "a1e19250-1bb5-4206-8861-732f56d1e6b3",
+      "courseName": "Lessons in Game ",
+      "courseCode": "80085",
+      "lecturerId": "c256766b-57af-4fc8-b389-fe8dce6fdff2",
+      "lecturerName": "Pius Linus",
+      "sessionCode": "AE9BC626",
+      "startedAt": "2026-03-25T09:06:52.556Z",
+      "expiresAt": "2026-03-25T09:16:52.556Z",
+      "lateAfter": "2026-03-25T09:11:52.556Z",
+      "windowMinutes": 10,
+      "lateThresholdMinutes": 5,
+      "active": true,
+      "qrDataUrl": "data:image/png;base64,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",
+      "scanUrl": "http://192.168.0.131:3000/scan/da875c58-1d35-428b-8cf7-6ff367aeab6e/AE9BC626"
+    },
+    {
+      "id": "37cfa054-bf81-4705-a36d-c7a6dbb4c0ab",
+      "courseId": "a1e19250-1bb5-4206-8861-732f56d1e6b3",
+      "courseName": "Lessons in Game ",
+      "courseCode": "80085",
+      "lecturerId": "c256766b-57af-4fc8-b389-fe8dce6fdff2",
+      "lecturerName": "Pius Linus",
+      "sessionCode": "F232C669",
+      "startedAt": "2026-03-25T15:27:00.533Z",
+      "expiresAt": "2026-03-25T15:37:00.533Z",
+      "lateAfter": "2026-03-25T15:32:00.533Z",
+      "windowMinutes": 10,
+      "lateThresholdMinutes": 5,
+      "active": false,
+      "qrDataUrl": "data:image/png;base64,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",
+      "scanUrl": "http://192.168.0.131:3000/scan/37cfa054-bf81-4705-a36d-c7a6dbb4c0ab/F232C669"
+    },
+    {
+      "id": "fb1ec2d9-529e-48eb-9a0e-0d192f53c540",
+      "courseId": "a1e19250-1bb5-4206-8861-732f56d1e6b3",
+      "courseName": "Lessons in Game ",
+      "courseCode": "80085",
+      "lecturerId": "c256766b-57af-4fc8-b389-fe8dce6fdff2",
+      "lecturerName": "Pius Linus",
+      "sessionCode": "2FAE58D6",
+      "startedAt": "2026-03-25T15:28:24.050Z",
+      "expiresAt": "2026-03-25T15:38:24.050Z",
+      "lateAfter": "2026-03-25T15:33:24.050Z",
+      "windowMinutes": 10,
+      "lateThresholdMinutes": 5,
+      "active": true,
+      "qrDataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAAAklEQVR4AewaftIAAAc5SURBVO3BQY4cSRLAQDLQ//8yV0c/JZCoamk24Gb2B2td4rDWRQ5rXeSw1kUOa13ksNZFDmtd5LDWRQ5rXeSw1kUOa13ksNZFDmtd5LDWRQ5rXeSw1kV++JDK31TxCZV/qWJSmSreUJkqnqg8qZhU/qaKTxzWushhrYsc1rrID19W8U0qb6hMFU8qnqhMFZPKVDGpTCpTxaQyVXxC5Zsqvknlmw5rXeSw1kUOa13kh1+m8kbFGypvVEwqU8U3VUwqk8obKm9UTCrfpPJGxW86rHWRw1oXOax1kR8upzJVfELlDZVPqDypeKIyVdzssNZFDmtd5LDWRX64TMUbFZPKVDGpfKLiicqTiicqU8Wk8qTi/9lhrYsc1rrIYa2L/PDLKv4llaniExWTyhsqU8VU8UTlScWkMlV8U8V/yWGtixzWushhrYv88GUq/09UpopJZar4RMWkMlVMKlPFpPIJlaniicp/2WGtixzWushhrYv88KGK/xKVJypPVKaKSeWNir9JZaqYVKaKJxX/Tw5rXeSw1kUOa13khw+pTBWTyjdVTBWTyicqJpWp4g2VT1RMKlPFE5Wp4g2Vb6r4TYe1LnJY6yKHtS5if/BFKlPFGypTxSdU/qWKb1J5UjGpPKl4ovKkYlJ5o+KbDmtd5LDWRQ5rXcT+4C9SeVIxqUwVb6g8qZhUpoo3VKaKJypTxSdUnlRMKr+pYlJ5UvGJw1oXOax1kcNaF7E/+IDKk4p/SWWq+CaVqWJSmSreUJkqJpVPVHxC5Y2KSWWq+MRhrYsc1rrIYa2L/PDLVN6omFSeVEwqb6hMFZPKVDFVPKl4Q2WqmFSmikllqnii8kbFVDGpTBWTym86rHWRw1oXOax1kR9+WcUbKlPFJyreUHmi8omKSeWNijdU/qaKf+mw1kUOa13ksNZFfvhQxROVqeINlTcqJpWp4o2KSeWNikllqphUJpU3Kt5QeVLxROVJxd90WOsih7UucljrIj98mconKj6hMlU8qXiiMlU8UZlUpopPVDxRmSomlScVk8pUMVX8lxzWushhrYsc1rrIDx9SmSreUHmjYlKZKp6ovFHxRGWqeKIyVUwVT1SeVEwq/5LKVPGbDmtd5LDWRQ5rXeSHL1N5UvFGxaQyVTxReVIxqUwqTyomlScVk8pU8UbFpDJVTCpTxaTyRGWqmFSeqEwV33RY6yKHtS5yWOsi9gd/kcqTikllqphUpopJ5UnFE5XfVPEJlTcqnqhMFZPKVPFE5Y2KTxzWushhrYsc1rqI/cEXqUwVT1SeVPyXqEwVb6g8qZhUpopJZaqYVD5R8URlqnhDZar4xGGtixzWushhrYvYH3xAZap4ojJVTCpPKp6oPKmYVKaKSeVJxRsq31TxN6m8UfE3Hda6yGGtixzWusgPH6qYVL6p4o2KSeU3qUwVk8pUMam8UTGpPKmYVN6o+CaVJxWfOKx1kcNaFzmsdZEfPqQyVUwqU8UbKt+kMlVMKlPFpPKbKiaVSWWqeKPiX6qYVL7psNZFDmtd5LDWRX74UMUnVKaKN1S+qeKNiicVTyreqJhUpoo3VD5RMam8UfFNh7UucljrIoe1LmJ/8AGVqeITKk8qPqHyRsUnVD5RMalMFb9J5UnFpPJGxTcd1rrIYa2LHNa6yA9fpjJVPFGZKp6oPKmYVKaKSWWqmFQ+UfFNFW+ovFHxpOJJxaQyVfymw1oXOax1kcNaF/nhyyqeqEwVT1SeVHyiYlJ5UvFNKk8qPlExqUwV36TyROVJxScOa13ksNZFDmtdxP7gAypTxaTyRsUbKn9TxaQyVXyTylQxqUwVb6h8U8UbKlPFJw5rXeSw1kUOa13kh19WMak8UXmjYlKZKp6oPKn4TSpPKm6i8psOa13ksNZFDmtdxP7g/5jKGxWTyt9UMam8UTGpPKmYVJ5UvKHypOKJylTxicNaFzmsdZHDWhf54UMqf1PFVDGpPFGZKt5QmSomlaniScWkMlU8qXijYlJ5ojJV/Jcd1rrIYa2LHNa6yA9fVvFNKk9UfpPKVDGpPFGZKiaV/7KKT6j8TYe1LnJY6yKHtS7ywy9TeaPiExWTylQxqUwVn6h4ojJVTCpPVN6omFSeqHyiYlJ5UvFNh7UucljrIoe1LvLD5SomlaliUpkqJpWpYlJ5UjGpTBVPKt5QmSq+SWVSeVIxqUwVnzisdZHDWhc5rHWRHy6j8obKVDGpPFGZKp6oTBWTylTxiYpJZaqYVL6p4m86rHWRw1oXOax1kR9+WcVvqphUpoo3VKaKSWWqmFTeUJkq3lB5UvGJiknlScW/dFjrIoe1LnJY6yI/fJnK36QyVUwqf1PFpPKkYlKZKiaVT1Q8qZhUnlRMKlPFpPKbDmtd5LDWRQ5rXcT+YK1LHNa6yGGtixzWushhrYsc1rrIYa2LHNa6yGGtixzWushhrYsc1rrIYa2LHNa6yGGtixzWusj/AOKJrnMH+Gt1AAAAAElFTkSuQmCC",
+      "scanUrl": "http://192.168.0.131:3000/scan/fb1ec2d9-529e-48eb-9a0e-0d192f53c540/2FAE58D6"
+    }
+  ],
+  "attendance": [
+    {
+      "id": "93e30552-9a30-4b72-b50f-374c5126a3fa",
+      "sessionId": "35faf8dd-d829-49d9-b833-9d6a83f3a5b4",
+      "courseId": "edb419a9-3f31-4453-9a75-71d2ebae0f00",
+      "studentId": "202201832",
+      "studentName": "Given Balowa",
+      "status": "present",
+      "scannedAt": "2026-03-23T11:09:37.441Z"
+    },
+    {
+      "id": "75d37ccf-7ff6-4684-a548-d1f3178e4c17",
+      "sessionId": "f7d9f5fe-bc62-4923-b91c-d69ba022ee46",
+      "courseId": "edb419a9-3f31-4453-9a75-71d2ebae0f00",
+      "studentId": "1234567",
+      "studentName": "Given",
+      "status": "present",
+      "scannedAt": "2026-03-23T11:11:33.682Z"
+    },
+    {
+      "id": "b0aff645-5507-4e81-a1fc-e3a408c9dd0d",
+      "sessionId": "1a2aa3ba-597b-4c55-a32d-c2bc37a3eec1",
+      "courseId": "a1e19250-1bb5-4206-8861-732f56d1e6b3",
+      "studentId": "1234567",
+      "studentName": "Given",
+      "status": "present",
+      "scannedAt": "2026-03-25T07:19:48.636Z"
+    },
+    {
+      "id": "cabb9d56-d002-4e33-91d0-afe86697c948",
+      "sessionId": "fb1ec2d9-529e-48eb-9a0e-0d192f53c540",
+      "courseId": "a1e19250-1bb5-4206-8861-732f56d1e6b3",
+      "studentId": "1234567",
+      "studentName": "Given",
+      "status": "present",
+      "scannedAt": "2026-03-25T15:28:57.030Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "ea1d1445-1564-4bd2-ae47-99cf81e4239f",
+      "name": "Admin",
+      "email": "admin@university.edu",
+      "password": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
+      "role": "admin",
+      "createdAt": "2026-03-23T10:20:31.966Z"
+    },
+    {
+      "id": "c256766b-57af-4fc8-b389-fe8dce6fdff2",
+      "name": "Pius Linus",
+      "email": "balowagiven8@gmail.com",
+      "password": "8bb0cf6eb9b17d0f7d22b456f121257dc1254e1f01665370476383ea776df414",
+      "role": "lecturer",
+      "createdAt": "2026-03-23T11:20:14.849Z"
+    }
+  ]
+}
