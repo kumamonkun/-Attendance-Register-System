@@ -6,15 +6,38 @@ const ExcelJS = require('exceljs');
 const multer = require('multer');
 const crypto = require('crypto');
 const os = require('os');
+const path = require('path');
 const pool = require('./db');
 const createTables = require('./schema');
 
 const app = express();
-const PORT = 3001;
+const PORT = Number(process.env.PORT || 3001);
 const upload = multer({ storage: multer.memoryStorage() });
 const LOCAL_SCAN_BASE_URL = `http://${getLocalIP()}:3000`;
+const CLIENT_BUILD_DIR = path.join(__dirname, '..', 'client', 'build');
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
-app.use(cors());
+function buildCorsOptions() {
+  if (!IS_PRODUCTION) return { origin: true };
+
+  const allowedOrigins = new Set();
+  try {
+    const publicUrl = normalizeAppUrl(process.env.PUBLIC_APP_URL || '');
+    if (publicUrl) allowedOrigins.add(publicUrl);
+  } catch {
+    // Let the explicit settings route surface invalid values instead.
+  }
+
+  return {
+    origin(origin, callback) {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.has(origin)) return callback(null, true);
+      return callback(new Error(`Origin ${origin} is not allowed by CORS.`));
+    },
+  };
+}
+
+app.use(cors(buildCorsOptions()));
 app.use(express.json());
 
 function getLocalIP() {
@@ -645,6 +668,15 @@ app.post('/api/email-alert', requireAuth, async (req, res) => {
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
+if (IS_PRODUCTION) {
+  app.use(express.static(CLIENT_BUILD_DIR));
+
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api/')) return next();
+    return res.sendFile(path.join(CLIENT_BUILD_DIR, 'index.html'));
+  });
+}
+
 // START SERVER
 async function start() {
   try {
@@ -662,6 +694,7 @@ async function start() {
     app.listen(PORT, () => {
       console.log(`Server running at http://localhost:${PORT}`);
       console.log(`Local scan base: ${LOCAL_SCAN_BASE_URL}`);
+      if (IS_PRODUCTION) console.log(`Serving frontend from: ${CLIENT_BUILD_DIR}`);
       if (process.env.PUBLIC_APP_URL && String(process.env.PUBLIC_APP_URL).trim()) {
         console.log(`Public app URL: ${normalizeAppUrl(process.env.PUBLIC_APP_URL)}`);
       }

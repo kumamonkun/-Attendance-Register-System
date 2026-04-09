@@ -4,6 +4,7 @@
   "description": "University QR-based attendance system",
   "scripts": {
     "install:all": "npm install && cd client && npm install",
+    "build": "npm --prefix client install && npm --prefix client run build",
     "dev:server": "node server/index.js",
     "dev:client": "cd client && npm start",
     "start": "node server/index.js"
