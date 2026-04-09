@@ -17,10 +17,23 @@ const LOCAL_SCAN_BASE_URL = `http://${getLocalIP()}:3000`;
 const CLIENT_BUILD_DIR = path.join(__dirname, '..', 'client', 'build');
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
-function buildCorsOptions() {
-  if (!IS_PRODUCTION) return { origin: true };
+function getForwardedValue(headerValue) {
+  return String(headerValue || '').split(',')[0].trim();
+}
+
+function getRequestOrigin(req) {
+  const host = getForwardedValue(req.headers['x-forwarded-host'] || req.headers.host);
+  if (!host) return '';
+
+  const protocol = getForwardedValue(req.headers['x-forwarded-proto']) || req.protocol || 'http';
+  return normalizeAppUrl(`${protocol}://${host}`);
+}
+
+function buildCorsOptions(req, callback) {
+  if (!IS_PRODUCTION) return callback(null, { origin: true });
 
   const allowedOrigins = new Set();
+
   try {
     const publicUrl = normalizeAppUrl(process.env.PUBLIC_APP_URL || '');
     if (publicUrl) allowedOrigins.add(publicUrl);
@@ -28,16 +41,31 @@ function buildCorsOptions() {
     // Let the explicit settings route surface invalid values instead.
   }
 
-  return {
-    origin(origin, callback) {
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.has(origin)) return callback(null, true);
-      return callback(new Error(`Origin ${origin} is not allowed by CORS.`));
+  try {
+    const requestOrigin = getRequestOrigin(req);
+    if (requestOrigin) allowedOrigins.add(requestOrigin);
+  } catch {
+    // Ignore malformed forwarded host/proto values and fall back to explicit config.
+  }
+
+  return callback(null, {
+    origin(origin, corsCallback) {
+      if (!origin) return corsCallback(null, true);
+
+      let normalizedOrigin = origin;
+      try {
+        normalizedOrigin = normalizeAppUrl(origin);
+      } catch {
+        return corsCallback(new Error(`Origin ${origin} is not a valid URL.`));
+      }
+
+      if (allowedOrigins.has(normalizedOrigin)) return corsCallback(null, true);
+      return corsCallback(new Error(`Origin ${origin} is not allowed by CORS.`));
     },
-  };
+  });
 }
 
-app.use(cors(buildCorsOptions()));
+app.use(cors(buildCorsOptions));
 app.use(express.json());
 
 function getLocalIP() {
@@ -670,6 +698,14 @@ app.post('/api/email-alert', requireAuth, async (req, res) => {
     if (!rows[0].email) return res.status(400).json({ error: `No email on file for ${studentName}.` });
     res.json({ ok: true, to: rows[0].email, studentName });
   } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.use((err, req, res, next) => {
+  if (!err) return next();
+  if (req.path.startsWith('/api/')) {
+    return res.status(500).json({ error: err.message || 'Server error.' });
+  }
+  return next(err);
 });
 
 if (IS_PRODUCTION) {
