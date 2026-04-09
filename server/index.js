@@ -166,6 +166,7 @@ async function getScanBaseUrl(req) {
 function hashPassword(p) { return crypto.createHash('sha256').update(p).digest('hex'); }
 function generateToken() { return crypto.randomBytes(32).toString('hex'); }
 const SESSION_TTL_DAYS = 7;
+const ADMIN_SESSION_TTL_HOURS = 12;
 const DEFAULT_ADMIN = {
   name: 'Admin',
   email: 'admin@university.edu',
@@ -219,9 +220,17 @@ function mapAttendance(row) {
   };
 }
 
-async function createAuthToken(userId) {
+function getTokenExpiryForRole(role) {
+  if (role === 'admin') {
+    return new Date(Date.now() + ADMIN_SESSION_TTL_HOURS * 60 * 60 * 1000);
+  }
+
+  return new Date(Date.now() + SESSION_TTL_DAYS * 24 * 60 * 60 * 1000);
+}
+
+async function createAuthToken(userId, role) {
   const token = generateToken();
-  const expiresAt = new Date(Date.now() + SESSION_TTL_DAYS * 24 * 60 * 60 * 1000);
+  const expiresAt = getTokenExpiryForRole(role);
   await pool.query('INSERT INTO auth_tokens (token, user_id, expires_at) VALUES ($1, $2, $3)', [token, userId, expiresAt]);
   return token;
 }
@@ -306,7 +315,7 @@ app.post('/api/auth/login', async (req, res) => {
     const { rows } = await pool.query('SELECT * FROM users WHERE email=$1 AND password=$2', [email, hashPassword(password)]);
     if (!rows.length) return res.status(401).json({ error: 'Invalid email or password.' });
     const user = rows[0];
-    const token = await createAuthToken(user.id);
+    const token = await createAuthToken(user.id, user.role);
     res.json({ token, role: user.role, name: user.name, email: user.email, mustChangePassword: user.must_change_password });
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
@@ -473,6 +482,32 @@ app.post('/api/courses', requireAdmin, async (req, res) => {
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
+app.put('/api/courses/:id', requireAdmin, async (req, res) => {
+  try {
+    const { code, name, lecturer, lecturerId } = req.body;
+    if (!code || !name) return res.status(400).json({ error: 'Course code and name are required.' });
+
+    let assignedLecturerId = lecturerId || null;
+    let assignedLecturerName = lecturer || '';
+
+    if (assignedLecturerId) {
+      const { rows: users } = await pool.query('SELECT id, name, role FROM users WHERE id=$1', [assignedLecturerId]);
+      if (!users.length || users[0].role !== 'lecturer') {
+        return res.status(400).json({ error: 'Select a valid lecturer account.' });
+      }
+      assignedLecturerId = users[0].id;
+      assignedLecturerName = users[0].name;
+    }
+
+    const { rows } = await pool.query(
+      'UPDATE courses SET code=$1, name=$2, lecturer=$3, lecturer_id=$4 WHERE id=$5 RETURNING *',
+      [code, name, assignedLecturerName || null, assignedLecturerId, req.params.id]
+    );
+    if (!rows.length) return res.status(404).json({ error: 'Course not found.' });
+    res.json(mapCourse(rows[0]));
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
 app.delete('/api/courses/:id', requireAdmin, async (req, res) => {
   try {
     await pool.query('DELETE FROM courses WHERE id=$1', [req.params.id]);
@@ -504,6 +539,28 @@ app.post('/api/students', requireAdmin, async (req, res) => {
       'INSERT INTO students (name,student_id,email,course_id) VALUES ($1,$2,$3,$4) RETURNING *',
       [name, studentId, email || null, courseId || null]
     );
+    res.json(mapStudent(rows[0]));
+  } catch (e) {
+    if (e.code === '23505') return res.status(400).json({ error: 'Student ID already exists.' });
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.put('/api/students/:id', requireAdmin, async (req, res) => {
+  try {
+    const { name, studentId, email, courseId } = req.body;
+    if (!name || !studentId || !courseId) {
+      return res.status(400).json({ error: 'Name, student ID, and course are required.' });
+    }
+
+    const { rows: courses } = await pool.query('SELECT id FROM courses WHERE id=$1', [courseId]);
+    if (!courses.length) return res.status(400).json({ error: 'Select a valid course.' });
+
+    const { rows } = await pool.query(
+      'UPDATE students SET name=$1, student_id=$2, email=$3, course_id=$4 WHERE id=$5 RETURNING *',
+      [name, studentId, email || null, courseId, req.params.id]
+    );
+    if (!rows.length) return res.status(404).json({ error: 'Student not found.' });
     res.json(mapStudent(rows[0]));
   } catch (e) {
     if (e.code === '23505') return res.status(400).json({ error: 'Student ID already exists.' });

@@ -1,6 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 const AuthContext = createContext(null);
+const TOKEN_KEY = 'token';
+const ACTIVE_SESSION_KEY = 'active_session';
 
 async function readApiResponse(response, fallbackMessage = 'Request failed.') {
   const contentType = response.headers.get('content-type') || '';
@@ -20,13 +22,30 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const getStoredToken = useCallback(
+    () => sessionStorage.getItem(TOKEN_KEY) || localStorage.getItem(TOKEN_KEY),
+    []
+  );
+
+  const saveTokenForRole = useCallback((token, role) => {
+    sessionStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(TOKEN_KEY);
+
+    if (!token) return;
+
+    const storage = role === 'admin' ? sessionStorage : localStorage;
+    storage.setItem(TOKEN_KEY, token);
+  }, []);
+
   const clearSession = useCallback(() => {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(ACTIVE_SESSION_KEY);
     setUser(null);
   }, []);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = getStoredToken();
     if (!token) {
       setLoading(false);
       return;
@@ -45,7 +64,7 @@ export function AuthProvider({ children }) {
       })
       .catch(() => clearSession())
       .finally(() => setLoading(false));
-  }, [clearSession]);
+  }, [clearSession, getStoredToken]);
 
   const login = useCallback(async (email, password) => {
     const res = await fetch('/api/auth/login', {
@@ -55,13 +74,13 @@ export function AuthProvider({ children }) {
     });
     const data = await readApiResponse(res, 'Login failed.');
     if (!res.ok) throw new Error(data.error || 'Login failed.');
-    localStorage.setItem('token', data.token);
+    saveTokenForRole(data.token, data.role);
     setUser(data);
     return data;
-  }, []);
+  }, [saveTokenForRole]);
 
   const logout = useCallback(async () => {
-    const token = localStorage.getItem('token');
+    const token = getStoredToken();
     if (token) {
       try {
         await fetch('/api/auth/logout', { method: 'POST', headers: { Authorization: `Bearer ${token}` } });
@@ -70,10 +89,10 @@ export function AuthProvider({ children }) {
       }
     }
     clearSession();
-  }, [clearSession]);
+  }, [clearSession, getStoredToken]);
 
   const authFetch = useCallback(async (url, options = {}) => {
-    const token = localStorage.getItem('token');
+    const token = getStoredToken();
     const isFormData = options.body instanceof FormData;
     const headers = {
       Authorization: token ? `Bearer ${token}` : '',
@@ -91,7 +110,7 @@ export function AuthProvider({ children }) {
 
     if (response.status === 401) clearSession();
     return response;
-  }, [clearSession]);
+  }, [clearSession, getStoredToken]);
 
   return (
     <AuthContext.Provider value={{ user, login, logout, authFetch, loading }}>

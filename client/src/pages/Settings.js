@@ -119,6 +119,7 @@ export default function Settings() {
       setResetConfirmation('');
 
       setTimeout(() => {
+        sessionStorage.removeItem('token');
         localStorage.removeItem('token');
         localStorage.removeItem('active_session');
         window.location.assign('/');
@@ -148,6 +149,11 @@ export default function Settings() {
             </span>
           </div>
         </div>
+        <p style={{ fontSize: 13, color: '#64748b', lineHeight: 1.6 }}>
+          {isAdmin
+            ? 'Admin sessions now stay signed in only for the current browser session. Closing the browser or tab signs the admin out on this device.'
+            : 'Lecturer sessions continue to stay signed in on this device unless you sign out or the session expires.'}
+        </p>
       </div>
 
       <div className="card" style={{ maxWidth: 680 }}>

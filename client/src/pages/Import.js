@@ -14,7 +14,7 @@ export default function Import() {
 
   useEffect(() => {
     authFetch('/api/courses').then(r => r.json()).then(setCourses);
-  }, []);
+  }, [authFetch]);
 
   const parsePreview = (file) => {
     const reader = new FileReader();
@@ -52,12 +52,11 @@ export default function Import() {
     if (!file) return;
     setLoading(true);
     setResult(null);
+    setError('');
     const form = new FormData();
     form.append('file', file);
-    const token = localStorage.getItem('token');
-    const res = await fetch('/api/students/import', {
+    const res = await authFetch('/api/students/import', {
       method: 'POST',
-      headers: { Authorization: `Bearer ${token}` },
       body: form,
     });
     const data = await res.json();
