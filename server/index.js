@@ -219,6 +219,10 @@ function requireAdmin(req, res, next) {
 }
 
 // AUTH
+app.get('/api/health', (req, res) => {
+  res.json({ ok: true, uptimeSeconds: Math.round(process.uptime()) });
+});
+
 app.post('/api/auth/login', async (req, res) => {
   try {
     const { email, password } = req.body;

@@ -29,12 +29,17 @@ export default function Login() {
     if (!newPassword || newPassword !== confirmPassword) return setChangeError('Passwords do not match.');
     if (newPassword.length < 6) return setChangeError('Password must be at least 6 characters.');
     if (newPassword === password) return setChangeError('New password must be different from your current password.');
-    const res = await authFetch('/api/auth/change-password', {
-      method: 'POST', body: JSON.stringify({ currentPassword: password, newPassword }),
-    });
-    const data = await res.json();
-    if (!res.ok) return setChangeError(data.error);
-    window.location.reload();
+    try {
+      const res = await authFetch('/api/auth/change-password', {
+        method: 'POST', body: JSON.stringify({ currentPassword: password, newPassword }),
+      });
+      const contentType = res.headers.get('content-type') || '';
+      const data = contentType.includes('application/json') ? await res.json() : null;
+      if (!res.ok) return setChangeError(data?.error || 'Could not change the password right now.');
+      window.location.reload();
+    } catch (e) {
+      setChangeError(e.message || 'Could not change the password right now.');
+    }
   };
 
   if (forceChange) {
