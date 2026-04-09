@@ -129,6 +129,18 @@ async function getScanBaseUrl() {
 function hashPassword(p) { return crypto.createHash('sha256').update(p).digest('hex'); }
 function generateToken() { return crypto.randomBytes(32).toString('hex'); }
 const SESSION_TTL_DAYS = 7;
+const DEFAULT_ADMIN = {
+  name: 'Admin',
+  email: 'admin@university.edu',
+  password: 'admin123',
+};
+
+async function seedDefaultAdmin(db) {
+  await db.query(
+    'INSERT INTO users (name,email,password,role,must_change_password) VALUES ($1,$2,$3,$4,$5)',
+    [DEFAULT_ADMIN.name, DEFAULT_ADMIN.email, hashPassword(DEFAULT_ADMIN.password), 'admin', true]
+  );
+}
 
 function mapUser(row) {
   return { ...row, mustChangePassword: row.must_change_password, createdAt: row.created_at };
@@ -313,6 +325,60 @@ app.post('/api/settings/network', requireAdmin, async (req, res) => {
     });
   } catch (e) {
     res.status(400).json({ error: e.message });
+  }
+});
+
+app.post('/api/admin/reset-database', requireAdmin, async (req, res) => {
+  const confirmation = String(req.body?.confirmation || '').trim();
+  if (confirmation !== 'RESET DATABASE') {
+    return res.status(400).json({ error: 'Type RESET DATABASE to confirm this action.' });
+  }
+
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+
+    const { rows } = await client.query(`
+      SELECT
+        (SELECT COUNT(*)::int FROM users) AS users,
+        (SELECT COUNT(*)::int FROM courses) AS courses,
+        (SELECT COUNT(*)::int FROM students) AS students,
+        (SELECT COUNT(*)::int FROM sessions) AS sessions,
+        (SELECT COUNT(*)::int FROM attendance) AS attendance,
+        (SELECT COUNT(*)::int FROM app_settings) AS settings,
+        (SELECT COUNT(*)::int FROM auth_tokens) AS auth_tokens
+    `);
+
+    await client.query(`
+      TRUNCATE TABLE
+        attendance,
+        sessions,
+        students,
+        courses,
+        auth_tokens,
+        app_settings,
+        users
+      RESTART IDENTITY CASCADE
+    `);
+
+    await seedDefaultAdmin(client);
+    await client.query('COMMIT');
+
+    res.json({
+      ok: true,
+      cleared: rows[0],
+      defaultAdmin: {
+        email: DEFAULT_ADMIN.email,
+        password: DEFAULT_ADMIN.password,
+        mustChangePassword: true,
+      },
+      message: 'Database reset complete. Sign in again with the default admin account.',
+    });
+  } catch (e) {
+    await client.query('ROLLBACK');
+    res.status(500).json({ error: e.message });
+  } finally {
+    client.release();
   }
 });
 
@@ -725,11 +791,8 @@ async function start() {
     // Seed default admin if no users exist
     const { rows } = await pool.query('SELECT COUNT(*) FROM users');
     if (parseInt(rows[0].count) === 0) {
-      await pool.query(
-        'INSERT INTO users (name,email,password,role,must_change_password) VALUES ($1,$2,$3,$4,$5)',
-        ['Admin', 'admin@university.edu', require('crypto').createHash('sha256').update('admin123').digest('hex'), 'admin', true]
-      );
-      console.log('Default admin created: admin@university.edu / admin123');
+      await seedDefaultAdmin(pool);
+      console.log(`Default admin created: ${DEFAULT_ADMIN.email} / ${DEFAULT_ADMIN.password}`);
     }
     app.listen(PORT, () => {
       console.log(`Server running at http://localhost:${PORT}`);

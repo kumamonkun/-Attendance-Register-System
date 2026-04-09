@@ -13,6 +13,10 @@ export default function Settings() {
   const [networkError, setNetworkError] = useState('');
   const [networkLoading, setNetworkLoading] = useState(false);
   const [networkSaving, setNetworkSaving] = useState(false);
+  const [resetConfirmation, setResetConfirmation] = useState('');
+  const [resetBusy, setResetBusy] = useState(false);
+  const [resetError, setResetError] = useState('');
+  const [resetMsg, setResetMsg] = useState('');
   const isAdmin = user?.role === 'admin';
 
   useEffect(() => {
@@ -84,6 +88,45 @@ export default function Settings() {
       setNetworkError(saveError.message || 'Could not save scan access settings.');
     } finally {
       setNetworkSaving(false);
+    }
+  };
+
+  const resetDatabase = async () => {
+    setResetMsg('');
+    setResetError('');
+
+    if (resetConfirmation.trim() !== 'RESET DATABASE') {
+      setResetError('Type RESET DATABASE exactly before resetting the app data.');
+      return;
+    }
+
+    const confirmed = window.confirm(
+      'This will permanently delete all users, courses, students, sessions, attendance records, and saved app settings. The app will keep only the default admin account. Continue?'
+    );
+    if (!confirmed) return;
+
+    setResetBusy(true);
+
+    try {
+      const res = await authFetch('/api/admin/reset-database', {
+        method: 'POST',
+        body: JSON.stringify({ confirmation: resetConfirmation }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Could not reset the database.');
+
+      setResetMsg('Database reset complete. Redirecting you to sign in with the default admin account...');
+      setResetConfirmation('');
+
+      setTimeout(() => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('active_session');
+        window.location.assign('/');
+      }, 1200);
+    } catch (resetRequestError) {
+      setResetError(resetRequestError.message || 'Could not reset the database.');
+    } finally {
+      setResetBusy(false);
     }
   };
 
@@ -210,6 +253,37 @@ export default function Settings() {
           {loading ? 'Saving...' : 'Change password'}
         </button>
       </div>
+
+      {isAdmin && (
+        <div className="card" style={{ maxWidth: 680, border: '1px solid #fecaca', background: '#fff7f7' }}>
+          <div className="card-title" style={{ color: '#991b1b' }}>Danger zone</div>
+          <p style={{ fontSize: 14, color: '#7f1d1d', marginBottom: 12, lineHeight: 1.6 }}>
+            Resetting the database permanently deletes all users, courses, students, sessions, attendance records, auth sessions, and saved app settings.
+            This is useful when you want a clean testing environment or a fresh go-live start.
+          </p>
+          <p style={{ fontSize: 13, color: '#7f1d1d', marginBottom: 14, lineHeight: 1.6 }}>
+            After the reset, only the default admin account will be recreated: <strong>admin@university.edu</strong> with password <strong>admin123</strong>.
+            You will be signed out immediately and asked to change that password again.
+          </p>
+          <div className="form-group">
+            <label>Type RESET DATABASE to unlock</label>
+            <input
+              value={resetConfirmation}
+              onChange={e => setResetConfirmation(e.target.value)}
+              placeholder="RESET DATABASE"
+            />
+          </div>
+          {resetError && <p style={{ fontSize: 13, color: '#b91c1c', marginBottom: 10 }}>{resetError}</p>}
+          {resetMsg && <p style={{ fontSize: 13, color: '#166534', marginBottom: 10 }}>{resetMsg}</p>}
+          <button
+            type="button"
+            className="btn btn-danger"
+            onClick={resetDatabase}
+            disabled={resetBusy || resetConfirmation.trim() !== 'RESET DATABASE'}>
+            {resetBusy ? 'Resetting...' : 'Reset all app data'}
+          </button>
+        </div>
+      )}
     </div>
   );
 }
