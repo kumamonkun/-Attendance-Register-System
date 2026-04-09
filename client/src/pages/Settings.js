@@ -169,7 +169,13 @@ export default function Settings() {
                 {networkInfo?.effectiveScanBaseUrl || 'Not available'}
               </p>
               <p style={{ fontSize: 12, color: '#64748b', marginTop: 8 }}>
-                Source: {networkInfo?.source === 'environment' ? 'server environment variable' : networkInfo?.source === 'settings' ? 'saved app setting' : 'local network fallback'}
+                Source: {networkInfo?.source === 'environment'
+                  ? 'server environment variable'
+                  : networkInfo?.source === 'settings'
+                    ? 'saved app setting'
+                    : networkInfo?.source === 'request'
+                      ? 'current hosted app URL'
+                      : 'local network fallback'}
               </p>
             </div>
 
@@ -191,7 +197,7 @@ export default function Settings() {
                 <p style={{ fontSize: 12, color: '#888', marginTop: -6, marginBottom: 14, lineHeight: 1.5 }}>
                   Use the public address that students can open from anywhere.
                   This can be a hosted domain or a secure tunnel URL that points to the React app.
-                  New sessions and QR refreshes will use this address.
+                  New sessions and QR refreshes will use this address. When the app is hosted, it can also fall back to the current live site URL automatically.
                 </p>
                 {networkInfo?.lockedByEnv && (
                   <p style={{ fontSize: 13, color: '#854d0e', marginBottom: 12 }}>

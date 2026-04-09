@@ -102,6 +102,32 @@ function normalizeAppUrl(value) {
   return normalized;
 }
 
+function isPrivateHostname(hostname) {
+  const value = String(hostname || '').toLowerCase();
+  if (!value) return false;
+  if (value === 'localhost' || value === '127.0.0.1' || value === '0.0.0.0' || value.endsWith('.local')) return true;
+  if (value.startsWith('10.')) return true;
+  if (value.startsWith('192.168.')) return true;
+
+  const match = value.match(/^172\.(\d{1,3})\./);
+  if (match) {
+    const secondOctet = Number(match[1]);
+    if (secondOctet >= 16 && secondOctet <= 31) return true;
+  }
+
+  return false;
+}
+
+function isPrivateAppUrl(value) {
+  if (!value) return false;
+  try {
+    const parsed = new URL(value);
+    return isPrivateHostname(parsed.hostname);
+  } catch {
+    return false;
+  }
+}
+
 async function getAppSetting(key) {
   const { rows } = await pool.query('SELECT value FROM app_settings WHERE key=$1', [key]);
   return rows[0]?.value || '';
@@ -116,12 +142,23 @@ async function setAppSetting(key, value) {
   );
 }
 
-async function getScanBaseUrl() {
+async function getScanBaseUrl(req) {
   const envUrl = normalizeAppUrl(process.env.PUBLIC_APP_URL || '');
-  if (envUrl) return { url: envUrl, source: 'environment', lockedByEnv: true };
-
   const savedUrl = normalizeAppUrl(await getAppSetting('public_app_url'));
+  const requestUrl = req ? getRequestOrigin(req) : '';
+
+  if (IS_PRODUCTION) {
+    if (envUrl && !isPrivateAppUrl(envUrl)) return { url: envUrl, source: 'environment', lockedByEnv: true };
+    if (savedUrl && !isPrivateAppUrl(savedUrl)) return { url: savedUrl, source: 'settings', lockedByEnv: false };
+    if (requestUrl) return { url: requestUrl, source: 'request', lockedByEnv: false };
+    if (envUrl) return { url: envUrl, source: 'environment', lockedByEnv: true };
+    if (savedUrl) return { url: savedUrl, source: 'settings', lockedByEnv: false };
+    throw new Error('No public scan URL is available. Set PUBLIC_APP_URL or open the app from its live hosted URL.');
+  }
+
+  if (envUrl) return { url: envUrl, source: 'environment', lockedByEnv: true };
   if (savedUrl) return { url: savedUrl, source: 'settings', lockedByEnv: false };
+  if (requestUrl) return { url: requestUrl, source: 'request', lockedByEnv: false };
 
   return { url: LOCAL_SCAN_BASE_URL, source: 'local', lockedByEnv: false };
 }
@@ -295,7 +332,7 @@ app.post('/api/auth/change-password', requireAuth, async (req, res) => {
 app.get('/api/settings/network', requireAuth, async (req, res) => {
   try {
     const configuredPublicAppUrl = normalizeAppUrl(await getAppSetting('public_app_url'));
-    const effective = await getScanBaseUrl();
+    const effective = await getScanBaseUrl(req);
     res.json({
       publicAppUrl: configuredPublicAppUrl,
       effectiveScanBaseUrl: effective.url,
@@ -314,7 +351,7 @@ app.post('/api/settings/network', requireAdmin, async (req, res) => {
 
     const publicAppUrl = normalizeAppUrl(req.body.publicAppUrl || '');
     await setAppSetting('public_app_url', publicAppUrl);
-    const effective = await getScanBaseUrl();
+    const effective = await getScanBaseUrl(req);
     res.json({
       ok: true,
       publicAppUrl,
@@ -593,7 +630,7 @@ app.post('/api/sessions/start', requireAuth, async (req, res) => {
       [courseId, course.name, course.code, req.user.userId, req.user.name, sessionCode, expiresAt, lateAfter, windowMinutes, lateThresholdMinutes]
     );
     const session = sess[0];
-    const { url: scanBaseUrl } = await getScanBaseUrl();
+    const { url: scanBaseUrl } = await getScanBaseUrl(req);
     const scanUrl = `${scanBaseUrl}/scan/${session.id}/${sessionCode}`;
     const qrDataUrl = await QRCode.toDataURL(scanUrl);
     await pool.query('UPDATE sessions SET qr_data_url=$1, scan_url=$2 WHERE id=$3', [qrDataUrl, scanUrl, session.id]);
@@ -617,7 +654,7 @@ app.post('/api/sessions/:id/refresh-qr', requireAuth, async (req, res) => {
     if (!session) return res.status(404).json({ error: 'Session not found.' });
     if (!session.active || new Date() > new Date(session.expires_at)) return res.status(400).json({ error: 'Session not active.' });
     const newCode = uuidv4().split('-')[0].toUpperCase();
-    const { url: scanBaseUrl } = await getScanBaseUrl();
+    const { url: scanBaseUrl } = await getScanBaseUrl(req);
     const scanUrl = `${scanBaseUrl}/scan/${session.id}/${newCode}`;
     const qrDataUrl = await QRCode.toDataURL(scanUrl);
     await pool.query('UPDATE sessions SET session_code=$1, qr_data_url=$2, scan_url=$3 WHERE id=$4', [newCode, qrDataUrl, scanUrl, session.id]);
